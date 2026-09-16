@@ -17,13 +17,8 @@ Then open http://localhost:8811 in a browser.
 - `script.js` — mobile nav, project lightbox, live terminal widget, contact form
 - `assets/` — project screenshots, walkthrough videos, and sample deliverables, grouped by case study
 
-## To finish setting up
+## Contact form
 
-The contact form on the page posts to Formspree. To make it live:
+Connected to Formspree (`https://formspree.io/f/mwlpkkvy`). Submissions go to the inbox used to create that form. `script.js` posts the form via `fetch` with `Accept: application/json` — Formspree's recommended AJAX pattern — so no extra client library is needed.
 
-1. Create a free form at [formspree.io](https://formspree.io) using your own email.
-2. Copy the form ID it gives you.
-3. In `index.html`, replace `YOUR_FORM_ID` in the `<form action="...">` line with that ID.
-4. Commit and push — the form will start delivering to your inbox.
-
-Until that's done, the form shows a friendly message pointing visitors to Upwork instead.
+The first real submission triggers a one-time confirmation email from Formspree that has to be approved before messages start arriving normally.
