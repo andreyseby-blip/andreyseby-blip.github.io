@@ -213,6 +213,63 @@ function closeFullImage() {
 }
 lbFull.addEventListener("click", closeFullImage);
 
+// ============ Tools orbit ============
+(function initOrbit() {
+  const stage = document.getElementById("orbitStage");
+  const toggle = document.getElementById("motionToggle");
+  if (!stage) return;
+
+  const chips = Array.from(stage.querySelectorAll(".orbit-chip"));
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const compact = window.matchMedia("(max-width: 900px)");
+
+  let paused = false;
+  let hovered = false;
+  let phase = 0;
+  let last = 0;
+  let raf = null;
+
+  toggle.addEventListener("click", () => {
+    paused = !paused;
+    toggle.textContent = paused ? "Resume movement" : "Pause movement";
+    toggle.setAttribute("aria-pressed", String(paused));
+  });
+  stage.addEventListener("pointerenter", () => (hovered = true));
+  stage.addEventListener("pointerleave", () => (hovered = false));
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden && !raf) tick(performance.now());
+  });
+
+  const INNER_COUNT = 6;
+
+  function tick(time) {
+    raf = requestAnimationFrame(tick);
+    if (compact.matches) return;
+
+    const delta = last ? Math.min(time - last, 50) : 0;
+    last = time;
+    const still = reduced.matches;
+    toggle.hidden = still;
+
+    if (!still && !paused && !hovered) {
+      phase += delta * 0.00016;
+    }
+
+    const width = stage.clientWidth;
+    chips.forEach((chip, i) => {
+      const inner = i < INNER_COUNT;
+      const count = inner ? INNER_COUNT : chips.length - INNER_COUNT;
+      const index = inner ? i : i - INNER_COUNT;
+      const angle = (index / count) * Math.PI * 2 + (inner ? phase : -phase * 0.7) - Math.PI / 2;
+      const rx = inner ? width * 0.17 : width * 0.37;
+      const ry = inner ? 95 : 175;
+      chip.style.translate = `${Math.cos(angle) * rx}px ${Math.sin(angle) * ry}px`;
+    });
+  }
+
+  requestAnimationFrame(tick);
+})();
+
 // ============ Live terminal widget ============
 const terminalLines = [
   { text: "Reading raw file: messy_sales_data.csv", cls: "" },
