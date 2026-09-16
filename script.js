@@ -213,39 +213,6 @@ function closeFullImage() {
 }
 lbFull.addEventListener("click", closeFullImage);
 
-// ============ Hero status terminal ============
-(function initHeroTerminal() {
-  const body = document.getElementById("heroTerminalBody");
-  if (!body) return;
-
-  const lines = [
-    { text: "checking connected systems…", cls: "" },
-    { text: "workflow automation &nbsp;&nbsp;<span class=\"ok\">online</span>", cls: "" },
-    { text: "python &amp; data pipelines &nbsp;<span class=\"ok\">online</span>", cls: "" },
-    { text: "excel / sheets sync &nbsp;&nbsp;&nbsp;<span class=\"ok\">online</span>", cls: "" },
-    { text: "ai agents &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"ok\">online</span>", cls: "" },
-    { text: "web design &amp; front-end &nbsp;<span class=\"ok\">online</span>", cls: "" },
-    { text: "<span class=\"hl\">All systems connected.</span>", cls: "" },
-  ];
-
-  let i = 0;
-  function next() {
-    if (i >= lines.length) {
-      const cursor = document.createElement("span");
-      cursor.className = "terminal-cursor";
-      body.appendChild(cursor);
-      return;
-    }
-    const line = document.createElement("div");
-    line.className = "terminal-line";
-    line.innerHTML = `<span style="color:#4a5266">$</span> ${lines[i].text}`;
-    body.appendChild(line);
-    i++;
-    setTimeout(next, 320);
-  }
-  setTimeout(next, 500);
-})();
-
 // ============ Scroll progress rail ============
 (function initScrollRail() {
   const rail = document.getElementById("scrollRail");
