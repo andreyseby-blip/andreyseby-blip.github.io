@@ -15,6 +15,18 @@
 
 <div class="grain"></div>
 
+<div class="fixed-cube" aria-hidden="true">
+  <div class="cube-loader">
+    <div class="cube-top"></div>
+    <div class="cube-wrapper">
+      <span class="cube-span" style="--i:0;"></span>
+      <span class="cube-span" style="--i:1;"></span>
+      <span class="cube-span" style="--i:2;"></span>
+      <span class="cube-span" style="--i:3;"></span>
+    </div>
+  </div>
+</div>
+
 <header class="nav" id="top">
   <div class="nav-inner">
     <a href="#top" class="logo">Andrei<span class="dot">.</span>Popescu</a>
@@ -43,14 +55,12 @@
     <button data-target="services" aria-label="Services"></button>
     <button data-target="work" aria-label="Work"></button>
     <button data-target="process" aria-label="Process"></button>
-    <button data-target="about" aria-label="Background"></button>
     <button data-target="contact" aria-label="Contact"></button>
   </nav>
 
   <!-- HERO -->
   <section class="hero" id="hero">
     <div class="hero-glow"></div>
-    <canvas id="heroCanvas" class="hero-canvas"></canvas>
     <div class="hero-grid">
       <div class="hero-copy">
         <div class="hero-id">
@@ -82,7 +92,6 @@
         <div class="terminal hero-terminal">
           <div class="terminal-bar">
             <span></span><span></span><span></span>
-            <span class="terminal-title">status</span>
           </div>
           <div class="terminal-body" id="heroTerminalBody"></div>
         </div>
@@ -97,21 +106,45 @@
       <h2>Fits into the stack you already have</h2>
       <p class="section-sub">No forced migrations — I connect the tools your business already runs on.</p>
     </div>
-    <div class="tool-grid" id="toolGrid">
-      <div class="tool-cell" data-tone="a">n8n</div>
-      <div class="tool-cell" data-tone="b">Make</div>
-      <div class="tool-cell" data-tone="a">Zapier</div>
-      <div class="tool-cell hub-cell">Your<br>business</div>
-      <div class="tool-cell" data-tone="c">Python</div>
-      <div class="tool-cell" data-tone="b">Excel</div>
-      <div class="tool-cell" data-tone="a">Sheets</div>
-      <div class="tool-cell" data-tone="c">OpenAI</div>
-      <div class="tool-cell" data-tone="b">Slack</div>
-      <div class="tool-cell" data-tone="a">Gmail</div>
-      <div class="tool-cell" data-tone="c">JS/HTML/CSS</div>
-      <div class="tool-cell" data-tone="b">Airtable</div>
+    <div class="logo-wall">
+      <div class="logo-orb orb-1"></div>
+      <div class="logo-orb orb-2"></div>
+      <div class="logo-orb orb-3"></div>
+
+      <div class="logo-row">
+        <div class="logo-track">
+          <span class="logo-pill">n8n</span>
+          <span class="logo-pill">Make</span>
+          <span class="logo-pill">Zapier</span>
+          <span class="logo-pill">Python</span>
+          <span class="logo-pill">Excel</span>
+          <span class="logo-pill">Google Sheets</span>
+          <span class="logo-pill" aria-hidden="true">n8n</span>
+          <span class="logo-pill" aria-hidden="true">Make</span>
+          <span class="logo-pill" aria-hidden="true">Zapier</span>
+          <span class="logo-pill" aria-hidden="true">Python</span>
+          <span class="logo-pill" aria-hidden="true">Excel</span>
+          <span class="logo-pill" aria-hidden="true">Google Sheets</span>
+        </div>
+      </div>
+
+      <div class="logo-row">
+        <div class="logo-track reverse">
+          <span class="logo-pill">OpenAI</span>
+          <span class="logo-pill">Slack</span>
+          <span class="logo-pill">Gmail</span>
+          <span class="logo-pill">Airtable</span>
+          <span class="logo-pill">HTML · CSS · JS</span>
+          <span class="logo-pill">API Integration</span>
+          <span class="logo-pill" aria-hidden="true">OpenAI</span>
+          <span class="logo-pill" aria-hidden="true">Slack</span>
+          <span class="logo-pill" aria-hidden="true">Gmail</span>
+          <span class="logo-pill" aria-hidden="true">Airtable</span>
+          <span class="logo-pill" aria-hidden="true">HTML · CSS · JS</span>
+          <span class="logo-pill" aria-hidden="true">API Integration</span>
+        </div>
+      </div>
     </div>
-    <button class="pill motion-toggle" id="motionToggle" type="button" aria-pressed="false">Pause scanning</button>
   </section>
 
   <!-- DIAGONAL MARQUEE -->
@@ -128,11 +161,10 @@
     <p class="eyebrow">AI Agents</p>
     <h2 class="agent-title">Your inbox,<br>on <em>autopilot</em>.</h2>
     <p class="agent-sub">An AI agent trained on your business, wired into the tools you already use — not a generic chatbot bolted onto your website.</p>
-    <div class="agent-orb">
-      <div class="agent-orb-core"></div>
-      <div class="agent-tag tag-1">Answers common questions instantly</div>
-      <div class="agent-tag tag-2">Qualifies leads before they reach you</div>
-      <div class="agent-tag tag-3">Logs every conversation automatically</div>
+    <div class="agent-tags-row">
+      <div class="agent-tag">Answers common questions instantly</div>
+      <div class="agent-tag">Qualifies leads before they reach you</div>
+      <div class="agent-tag">Logs every conversation automatically</div>
     </div>
   </section>
 
@@ -341,28 +373,6 @@
     </div>
   </section>
 
-  <!-- BACKGROUND / CREDENTIALS -->
-  <section class="credentials" id="about">
-    <div class="section-head">
-      <p class="eyebrow">Background</p>
-      <h2>Business-side training, not just code</h2>
-      <p class="section-sub">Automation only pays off when it's built around how a business actually makes decisions — this is the other half of that.</p>
-    </div>
-    <div class="credentials-grid">
-      <div class="credential-card">
-        <h3>Finance for Non-Finance Professionals</h3>
-        <p>Rice University — 2022</p>
-      </div>
-      <div class="credential-card">
-        <h3>Investment Risk Management</h3>
-        <p>Coursera — 2022</p>
-      </div>
-      <div class="credential-card">
-        <h3>Essentials for Ensuring Entrepreneurial Success</h3>
-        <p>CPD-Accredited — 2022</p>
-      </div>
-    </div>
-  </section>
 
   <!-- CONTACT -->
   <section class="contact" id="contact">
@@ -423,6 +433,5 @@
 </div>
 
 <script src="script.js"></script>
-<script type="module" src="hero-scene.js"></script>
 </body>
 </html>

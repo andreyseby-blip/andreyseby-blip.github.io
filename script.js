@@ -296,52 +296,6 @@ lbFull.addEventListener("click", closeFullImage);
   observer.observe(section);
 })();
 
-// ============ Tools grid (sequential scan) ============
-(function initToolScan() {
-  const grid = document.getElementById("toolGrid");
-  const toggle = document.getElementById("motionToggle");
-  if (!grid) return;
-
-  const cells = Array.from(grid.querySelectorAll(".tool-cell:not(.hub-cell)"));
-  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-  let paused = reduced.matches;
-  let index = 0;
-  let timer = null;
-
-  toggle.hidden = reduced.matches;
-  toggle.addEventListener("click", () => {
-    paused = !paused;
-    toggle.textContent = paused ? "Resume scanning" : "Pause scanning";
-    toggle.setAttribute("aria-pressed", String(paused));
-    if (!paused) start();
-  });
-
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting && !reduced.matches) start();
-      else stop();
-    });
-  }, { threshold: 0.2 });
-  io.observe(grid);
-
-  function step() {
-    cells.forEach((c) => c.classList.remove("scanning"));
-    cells[index].classList.add("scanning");
-    index = (index + 1) % cells.length;
-  }
-
-  function start() {
-    if (timer || paused || reduced.matches) return;
-    step();
-    timer = setInterval(step, 700);
-  }
-  function stop() {
-    clearInterval(timer);
-    timer = null;
-  }
-})();
-
 // ============ Live terminal widget ============
 const terminalLines = [
   { text: "Reading raw file: messy_sales_data.csv", cls: "" },
