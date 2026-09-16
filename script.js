@@ -213,61 +213,133 @@ function closeFullImage() {
 }
 lbFull.addEventListener("click", closeFullImage);
 
-// ============ Tools orbit ============
-(function initOrbit() {
-  const stage = document.getElementById("orbitStage");
+// ============ Hero status terminal ============
+(function initHeroTerminal() {
+  const body = document.getElementById("heroTerminalBody");
+  if (!body) return;
+
+  const lines = [
+    { text: "checking connected systems…", cls: "" },
+    { text: "workflow automation &nbsp;&nbsp;<span class=\"ok\">online</span>", cls: "" },
+    { text: "python &amp; data pipelines &nbsp;<span class=\"ok\">online</span>", cls: "" },
+    { text: "excel / sheets sync &nbsp;&nbsp;&nbsp;<span class=\"ok\">online</span>", cls: "" },
+    { text: "ai agents &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"ok\">online</span>", cls: "" },
+    { text: "web design &amp; front-end &nbsp;<span class=\"ok\">online</span>", cls: "" },
+    { text: "<span class=\"hl\">All systems connected.</span>", cls: "" },
+  ];
+
+  let i = 0;
+  function next() {
+    if (i >= lines.length) {
+      const cursor = document.createElement("span");
+      cursor.className = "terminal-cursor";
+      body.appendChild(cursor);
+      return;
+    }
+    const line = document.createElement("div");
+    line.className = "terminal-line";
+    line.innerHTML = `<span style="color:#4a5266">$</span> ${lines[i].text}`;
+    body.appendChild(line);
+    i++;
+    setTimeout(next, 320);
+  }
+  setTimeout(next, 500);
+})();
+
+// ============ Scroll progress rail ============
+(function initScrollRail() {
+  const rail = document.getElementById("scrollRail");
+  if (!rail) return;
+  const buttons = Array.from(rail.querySelectorAll("button"));
+  const sections = buttons
+    .map((btn) => ({ btn, el: document.getElementById(btn.dataset.target) }))
+    .filter((s) => s.el);
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const target = document.getElementById(btn.dataset.target);
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const match = sections.find((s) => s.el === entry.target);
+        if (!match) return;
+        if (entry.isIntersecting) {
+          buttons.forEach((b) => b.classList.remove("active"));
+          match.btn.classList.add("active");
+        }
+      });
+    },
+    { threshold: 0, rootMargin: "-45% 0px -45% 0px" }
+  );
+  sections.forEach((s) => observer.observe(s.el));
+})();
+
+// ============ AI agent spotlight reveal ============
+(function initAgentReveal() {
+  const section = document.querySelector(".agent-spotlight");
+  if (!section) return;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          section.classList.add("in-view");
+          observer.disconnect();
+        }
+      });
+    },
+    { threshold: 0.35 }
+  );
+  observer.observe(section);
+})();
+
+// ============ Tools grid (sequential scan) ============
+(function initToolScan() {
+  const grid = document.getElementById("toolGrid");
   const toggle = document.getElementById("motionToggle");
-  if (!stage) return;
+  if (!grid) return;
 
-  const chips = Array.from(stage.querySelectorAll(".orbit-chip"));
+  const cells = Array.from(grid.querySelectorAll(".tool-cell:not(.hub-cell)"));
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-  const compact = window.matchMedia("(max-width: 900px)");
 
-  let paused = false;
-  let hovered = false;
-  let phase = 0;
-  let last = 0;
-  let raf = null;
+  let paused = reduced.matches;
+  let index = 0;
+  let timer = null;
 
+  toggle.hidden = reduced.matches;
   toggle.addEventListener("click", () => {
     paused = !paused;
-    toggle.textContent = paused ? "Resume movement" : "Pause movement";
+    toggle.textContent = paused ? "Resume scanning" : "Pause scanning";
     toggle.setAttribute("aria-pressed", String(paused));
-  });
-  stage.addEventListener("pointerenter", () => (hovered = true));
-  stage.addEventListener("pointerleave", () => (hovered = false));
-  document.addEventListener("visibilitychange", () => {
-    if (!document.hidden && !raf) tick(performance.now());
+    if (!paused) start();
   });
 
-  const INNER_COUNT = 6;
-
-  function tick(time) {
-    raf = requestAnimationFrame(tick);
-    if (compact.matches) return;
-
-    const delta = last ? Math.min(time - last, 50) : 0;
-    last = time;
-    const still = reduced.matches;
-    toggle.hidden = still;
-
-    if (!still && !paused && !hovered) {
-      phase += delta * 0.00016;
-    }
-
-    const width = stage.clientWidth;
-    chips.forEach((chip, i) => {
-      const inner = i < INNER_COUNT;
-      const count = inner ? INNER_COUNT : chips.length - INNER_COUNT;
-      const index = inner ? i : i - INNER_COUNT;
-      const angle = (index / count) * Math.PI * 2 + (inner ? phase : -phase * 0.7) - Math.PI / 2;
-      const rx = inner ? width * 0.17 : width * 0.37;
-      const ry = inner ? 95 : 175;
-      chip.style.translate = `${Math.cos(angle) * rx}px ${Math.sin(angle) * ry}px`;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting && !reduced.matches) start();
+      else stop();
     });
+  }, { threshold: 0.2 });
+  io.observe(grid);
+
+  function step() {
+    cells.forEach((c) => c.classList.remove("scanning"));
+    cells[index].classList.add("scanning");
+    index = (index + 1) % cells.length;
   }
 
-  requestAnimationFrame(tick);
+  function start() {
+    if (timer || paused || reduced.matches) return;
+    step();
+    timer = setInterval(step, 700);
+  }
+  function stop() {
+    clearInterval(timer);
+    timer = null;
+  }
 })();
 
 // ============ Live terminal widget ============
