@@ -38,6 +38,7 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-glow"></div>
+    <canvas id="heroCanvas" class="hero-canvas"></canvas>
     <div class="hero-inner">
       <p class="eyebrow">Business Automation &amp; Web Development</p>
       <h1 class="hero-title">
@@ -239,21 +240,33 @@
 
     <div class="process-grid">
       <div class="process-step">
+        <div class="process-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        </div>
         <span class="process-num">01</span>
         <h3>Understand the actual problem</h3>
         <p>Before proposing anything, I want to know what's slow, what's manual, and what "done well" looks like for your business specifically.</p>
       </div>
       <div class="process-step">
+        <div class="process-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.6.6 1 1.3 1.2 2.1l.1.4h5.4l.1-.4c.2-.8.6-1.5 1.2-2.1A6 6 0 0 0 12 3Z"/></svg>
+        </div>
         <span class="process-num">02</span>
         <h3>Propose the simplest solution that works</h3>
         <p>Not the most impressive one — the one that solves the problem without adding a system you'll have to babysit later.</p>
       </div>
       <div class="process-step">
+        <div class="process-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 12 2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+        </div>
         <span class="process-num">03</span>
         <h3>Build, test, and check in</h3>
         <p>You get progress updates as it's built, and it gets tested against real data before it's called finished.</p>
       </div>
       <div class="process-step">
+        <div class="process-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
         <span class="process-num">04</span>
         <h3>Hand off clean</h3>
         <p>Plain-language docs on how it works and how to maintain it, so the solution is genuinely yours — not a black box.</p>
@@ -349,5 +362,6 @@
 </div>
 
 <script src="script.js"></script>
+<script type="module" src="hero-scene.js"></script>
 </body>
 </html>
