@@ -379,7 +379,11 @@ h1, h2, h3 {
 /* ============ Hero ============ */
 .hero {
   position: relative;
-  padding: 176px 32px 96px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 140px 32px 80px;
   text-align: center;
   overflow: hidden;
 }
