@@ -87,6 +87,22 @@ const PROJECTS = {
     video: "assets/website-customization/project-video.mp4",
     pdf: "assets/website-customization/sample-deliverable.pdf",
   },
+  northstudio: {
+    tag: "Web Design · Booking Flow",
+    title: "A booking-ready site for local service businesses",
+    desc: "A concept website built for a modern salon-style business: a landing page that sells the experience, clearly priced services, a photo gallery, a founder/about section, and a live appointment scheduler where a visitor picks a service, a date, and a time. Presented here as a demo, not a real client build — the structure adapts quickly to any local service business with branding, photos, and pricing swapped in.",
+    stats: [
+      { num: "3", label: "steps to book" },
+      { num: "100%", label: "responsive" },
+      { num: "Live", label: "interactive demo" },
+    ],
+    images: [
+      "assets/north-studio/gallery-1-hero.png",
+      "assets/north-studio/gallery-2-services.png",
+      "assets/north-studio/gallery-3-booking.png",
+    ],
+    live: "https://north-studio-upwork-demo.pages.dev",
+  },
   cleaning: {
     tag: "PowerShell · Data Cleaning",
     title: "Messy sales exports → a clean report, automatically",
@@ -127,6 +143,8 @@ function renderProject(key) {
     actions = `<a class="btn btn-secondary" href="${p.pdf}" target="_blank" rel="noopener">View sample deliverable (PDF)</a>`;
   } else if (p.pdfs) {
     actions = p.pdfs.map((pdf) => `<a class="btn btn-secondary" href="${pdf.href}" target="_blank" rel="noopener">${pdf.label}</a>`).join("");
+  } else if (p.live) {
+    actions = `<a class="btn btn-secondary" href="${p.live}" target="_blank" rel="noopener">View live demo →</a>`;
   }
 
   return `
@@ -147,6 +165,16 @@ function openLightbox(key) {
 
   lightboxContent.querySelectorAll(".lb-gallery img").forEach((img) => {
     img.addEventListener("click", () => openFullImage(img.src));
+  });
+
+  lightboxContent.querySelectorAll(".lb-stat").forEach((stat, i) => {
+    stat.style.opacity = "0";
+    stat.style.transform = "translateY(10px) scale(0.94)";
+    requestAnimationFrame(() => {
+      stat.style.transition = `opacity 0.4s ease ${i * 90}ms, transform 0.4s cubic-bezier(0.16,1,0.3,1) ${i * 90}ms`;
+      stat.style.opacity = "1";
+      stat.style.transform = "translateY(0) scale(1)";
+    });
   });
 }
 
@@ -237,8 +265,8 @@ if (terminalCard) {
   observer.observe(terminalCard);
 }
 
-// ============ Scroll-reveal for cards ============
-const revealTargets = document.querySelectorAll(".service-card, .work-card, .process-step");
+// ============ Scroll-reveal for cards (staggered) ============
+const revealGroups = document.querySelectorAll(".services-grid, .work-grid, .process-grid, .credentials-grid");
 const revealObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
@@ -251,12 +279,30 @@ const revealObserver = new IntersectionObserver(
   },
   { threshold: 0.15 }
 );
-revealTargets.forEach((el) => {
-  el.style.opacity = "0";
-  el.style.transform = "translateY(16px)";
-  el.style.transition = "opacity 0.5s ease, transform 0.5s ease";
-  revealObserver.observe(el);
+revealGroups.forEach((group) => {
+  Array.from(group.children).forEach((el, i) => {
+    el.style.opacity = "0";
+    el.style.transform = "translateY(16px)";
+    el.style.transition = `opacity 0.55s ease ${i * 70}ms, transform 0.55s ease ${i * 70}ms`;
+    revealObserver.observe(el);
+  });
 });
+
+// ============ Tilt-on-hover for cards ============
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+if (!prefersReducedMotion) {
+  document.querySelectorAll(".work-card, .service-card").forEach((card) => {
+    card.addEventListener("mousemove", (e) => {
+      const rect = card.getBoundingClientRect();
+      const px = (e.clientX - rect.left) / rect.width - 0.5;
+      const py = (e.clientY - rect.top) / rect.height - 0.5;
+      card.style.transform = `perspective(800px) rotateX(${(-py * 5).toFixed(2)}deg) rotateY(${(px * 5).toFixed(2)}deg) translateY(-4px)`;
+    });
+    card.addEventListener("mouseleave", () => {
+      card.style.transform = "";
+    });
+  });
+}
 
 // ============ Contact form (Formspree AJAX) ============
 const contactForm = document.getElementById("contactForm");
