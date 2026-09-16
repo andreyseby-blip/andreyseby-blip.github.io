@@ -527,6 +527,7 @@ h1, h2, h3 {
 .skew-track:hover { animation-play-state: paused; }
 .skew-track span {
   flex-shrink: 0;
+  white-space: nowrap;
   padding: 0 28px;
   font-family: var(--ff-display);
   font-weight: 700;
