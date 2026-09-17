@@ -370,10 +370,10 @@ h1, h2, h3 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: -1;
+  z-index: 50;
   pointer-events: none;
   perspective: 600px;
-  opacity: 0.92;
+  opacity: 0.95;
 }
 .cube-loader {
   position: relative;
