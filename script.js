@@ -245,24 +245,6 @@ lbFull.addEventListener("click", closeFullImage);
   sections.forEach((s) => observer.observe(s.el));
 })();
 
-// ============ AI agent spotlight reveal ============
-(function initAgentReveal() {
-  const section = document.querySelector(".agent-spotlight");
-  if (!section) return;
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          section.classList.add("in-view");
-          observer.disconnect();
-        }
-      });
-    },
-    { threshold: 0.35 }
-  );
-  observer.observe(section);
-})();
-
 // ============ Live terminal widget ============
 const terminalLines = [
   { text: "Reading raw file: messy_sales_data.csv", cls: "" },
@@ -315,29 +297,6 @@ if (terminalCard) {
   observer.observe(terminalCard);
 }
 
-// ============ Scroll-reveal for cards (staggered) ============
-const revealGroups = document.querySelectorAll(".services-grid, .work-grid, .process-grid, .credentials-grid");
-const revealObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = "1";
-        entry.target.style.transform = "translateY(0)";
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  },
-  { threshold: 0.15 }
-);
-revealGroups.forEach((group) => {
-  Array.from(group.children).forEach((el, i) => {
-    el.style.opacity = "0";
-    el.style.transform = "translateY(16px)";
-    el.style.transition = `opacity 0.55s ease ${i * 70}ms, transform 0.55s ease ${i * 70}ms`;
-    revealObserver.observe(el);
-  });
-});
-
 // ============ Tilt-on-hover for cards ============
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 if (!prefersReducedMotion) {
@@ -352,6 +311,48 @@ if (!prefersReducedMotion) {
       card.style.transform = "";
     });
   });
+}
+
+// ============ Process section — GSAP ScrollTrigger sequence ============
+if (window.gsap && window.ScrollTrigger && !prefersReducedMotion) {
+  gsap.registerPlugin(ScrollTrigger);
+
+  const processSection = document.querySelector(".process");
+  const steps = gsap.utils.toArray(".process-step");
+
+  if (processSection && steps.length) {
+    gsap.set(steps, { opacity: 0, y: 40 });
+    gsap.set(".process-icon", { opacity: 0, scale: 0.5, rotate: -12 });
+    gsap.set(".process-num", { opacity: 0, x: -12 });
+    gsap.set(".process-bar", { scaleX: 0 });
+    gsap.set(".traits", { opacity: 0, y: 16 });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: processSection,
+        start: "top top",
+        end: "+=" + (steps.length + 1) * 380,
+        scrub: 0.6,
+        pin: true,
+        anticipatePin: 1,
+      },
+    });
+
+    steps.forEach((step, i) => {
+      const bar = step.querySelector(".process-bar");
+      const icon = step.querySelector(".process-icon");
+      const num = step.querySelector(".process-num");
+
+      tl.to(step, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, i)
+        .to(bar, { scaleX: 1, duration: 0.6, ease: "power2.out" }, i)
+        .to(num, { opacity: 1, x: 0, duration: 0.5, ease: "power2.out" }, i)
+        .to(icon, { opacity: 1, scale: 1, rotate: 0, duration: 0.6, ease: "back.out(1.7)" }, i + 0.1);
+    });
+
+    tl.to(".traits", { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, steps.length);
+  }
+
+  window.addEventListener("load", () => ScrollTrigger.refresh());
 }
 
 // ============ Contact form (Formspree AJAX) ============

@@ -217,9 +217,6 @@ h1, h2, h3 {
   margin: 0 auto 20px;
   position: relative;
   z-index: 1;
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .agent-title em { font-style: normal; color: var(--accent-bright); }
 .agent-sub {
@@ -229,14 +226,6 @@ h1, h2, h3 {
   margin: 0 auto;
   color: var(--text-dim);
   font-size: 1.05rem;
-  opacity: 0;
-  transform: translateY(14px);
-  transition: opacity 0.7s ease 0.12s, transform 0.7s ease 0.12s;
-}
-.agent-spotlight.in-view .agent-title,
-.agent-spotlight.in-view .agent-sub {
-  opacity: 1;
-  transform: translateY(0);
 }
 /* UIverse-style glass card (AI agent visual) */
 .ui-card {
@@ -354,18 +343,9 @@ h1, h2, h3 {
   color: var(--text-dim);
   white-space: nowrap;
   box-shadow: var(--shadow-sm);
-  opacity: 0;
-  animation: agentTagIn 0.6s ease forwards;
   transition: background 0.2s ease;
 }
 .agent-tag:hover { background: rgba(255, 255, 255, 0.95); }
-.agent-tags-row .agent-tag:nth-child(1) { animation-delay: 0.3s; }
-.agent-tags-row .agent-tag:nth-child(2) { animation-delay: 0.5s; }
-.agent-tags-row .agent-tag:nth-child(3) { animation-delay: 0.7s; }
-@keyframes agentTagIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
 @media (max-width: 600px) {
   .agent-tag { white-space: normal; }
 }
@@ -893,8 +873,20 @@ section { padding: 108px 32px; }
   gap: 24px;
 }
 .process-step {
+  position: relative;
   padding: 32px 8px 0;
   border-top: 1px solid var(--border-strong);
+}
+.process-bar {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+  transform: scaleX(1);
+  transform-origin: left center;
+  pointer-events: none;
 }
 .process-icon {
   width: 40px; height: 40px;
