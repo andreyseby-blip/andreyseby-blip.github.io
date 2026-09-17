@@ -106,7 +106,7 @@ h1, h2, h3 {
   overflow: hidden;
 }
 .btn-primary {
-  background: rgba(226, 121, 61, 0.78);
+  background: rgba(226, 121, 61, 0.35);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   color: #171008;
@@ -388,10 +388,10 @@ h1, h2, h3 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 50;
+  z-index: -1;
   pointer-events: none;
   perspective: 600px;
-  opacity: 0.78;
+  opacity: 0.9;
 }
 .cube-loader {
   position: relative;
@@ -455,7 +455,7 @@ h1, h2, h3 {
     0 0 40px hsl(24, 60%, 80%);
 }
 @media (max-width: 640px) {
-  .fixed-cube { transform: translate(-50%, -50%) scale(0.6); opacity: 0.6; }
+  .fixed-cube { transform: translate(-50%, -50%) scale(0.6); opacity: 0.75; }
 }
 
 /* ============ Nav ============ */
@@ -968,7 +968,7 @@ section { padding: 108px 32px; }
 .form-row { display: flex; flex-direction: column; gap: 8px; }
 .form-row label { font-size: 0.85rem; color: var(--text-dim); }
 .form-row input, .form-row textarea {
-  background: rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.32);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 2px solid transparent;
@@ -996,11 +996,11 @@ section { padding: 108px 32px; }
   font-weight: 700;
   font-size: 0.95rem;
   color: #171008;
-  background: linear-gradient(45deg, rgba(226, 121, 61, 0.8) 0%, rgba(240, 146, 79, 0.8) 100%);
+  background: linear-gradient(45deg, rgba(226, 121, 61, 0.35) 0%, rgba(240, 146, 79, 0.35) 100%);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   box-shadow: 0 18px 20px -16px rgba(226, 121, 61, 0.55);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 .form-submit:hover {
   transform: scale(1.03);
