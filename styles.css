@@ -669,12 +669,27 @@ h1, h2, h3 {
   box-shadow: var(--shadow-sm);
 }
 .logo-icon {
-  width: 18px;
-  height: 18px;
+  width: 15px;
+  height: 15px;
   flex-shrink: 0;
-  fill: var(--text-dim);
+  fill: currentColor;
+  color: var(--text-dim);
 }
-.logo-icon--stroke { fill: none; stroke: var(--text-dim); }
+.logo-icon--stroke { fill: none; stroke: currentColor; }
+
+.icon-n8n { color: #ea4b71; }
+.icon-make { color: #6d00cc; }
+.icon-zapier { color: #ff4a00; }
+.icon-python { color: #3776ab; }
+.icon-excel { color: #217346; }
+.icon-sheets { color: #23a566; }
+.icon-openai { color: #10a37f; }
+.icon-slack { color: #611f69; }
+.icon-gmail { color: #ea4335; }
+.icon-airtable { color: #d18a00; }
+.icon-html5 { color: #e34f26; }
+.icon-css3 { color: #1572b6; }
+.icon-js { color: #c9a400; }
 @media (max-width: 700px) {
   .logo-orb { display: none; }
 }
