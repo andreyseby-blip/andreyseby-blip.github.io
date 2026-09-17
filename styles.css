@@ -100,8 +100,10 @@ h1, h2, h3 {
   border-radius: 999px;
   font-weight: 600;
   font-size: 0.95rem;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease, color 0.4s ease;
   white-space: nowrap;
+  position: relative;
+  overflow: hidden;
 }
 .btn-primary {
   background: var(--accent);
@@ -109,12 +111,30 @@ h1, h2, h3 {
   box-shadow: 0 8px 24px -6px rgba(226, 121, 61, 0.55);
 }
 .btn-primary:hover { background: var(--accent-bright); transform: translateY(-2px); }
+
+.btn-secondary, .btn-ghost {
+  z-index: 0;
+}
+.btn-secondary::before, .btn-ghost::before {
+  content: "";
+  position: absolute;
+  left: -20%;
+  top: 0;
+  width: 0;
+  height: 100%;
+  background: var(--accent);
+  transform: skewX(20deg);
+  z-index: -1;
+  transition: width 0.45s ease;
+}
+.btn-secondary:hover::before, .btn-ghost:hover::before { width: 140%; }
+
 .btn-secondary {
   background: var(--bg-raised-2);
   color: var(--text);
   border: 1px solid var(--border-strong);
 }
-.btn-secondary:hover { border-color: var(--accent); color: var(--accent-bright); transform: translateY(-2px); }
+.btn-secondary:hover { border-color: var(--accent); color: #171008; transform: translateY(-2px); }
 .btn-ghost {
   background: transparent;
   border: 1px solid var(--border-strong);
@@ -122,7 +142,7 @@ h1, h2, h3 {
   padding: 9px 18px;
   font-size: 0.88rem;
 }
-.btn-ghost:hover { border-color: var(--accent); color: var(--accent-bright); }
+.btn-ghost:hover { border-color: var(--accent); color: #171008; }
 
 /* ============ Scroll progress rail ============ */
 .scroll-rail {
@@ -214,6 +234,101 @@ h1, h2, h3 {
   opacity: 1;
   transform: translateY(0);
 }
+/* UIverse-style glass card (AI agent visual) */
+.ui-card {
+  position: relative;
+  z-index: 1;
+  width: 200px;
+  height: 300px;
+  margin: 56px auto 0;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.ui-card-bg {
+  position: absolute;
+  inset: 0;
+  padding: 4px;
+  background: var(--accent);
+}
+.ui-card-bg-shape {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  border-top-right-radius: 90px;
+  border-bottom-right-radius: 36px;
+  background: var(--ink);
+}
+.ui-card-glass {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-radius: 16px;
+}
+.ui-card-orb {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(to top right, var(--accent-dim), #ffd9b3);
+  animation: uiCardSpin 12s linear infinite;
+}
+@keyframes uiCardSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.ui-card-content {
+  position: absolute;
+  inset: 0;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+.ui-card-info {
+  width: 62%;
+  padding: 12px 10px 8px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  background: rgba(249, 250, 251, 0.12);
+  color: #e8e9ed;
+  font-family: var(--ff-mono);
+}
+.ui-card-title { font-size: 1.15rem; font-weight: 700; font-family: var(--ff-display); }
+.ui-card-subtitle { font-size: 0.72rem; color: rgba(232, 233, 237, 0.6); margin-top: 2px; }
+.ui-card-year { margin-top: auto; display: flex; justify-content: center; }
+.ui-card-year span { font-size: 0.72rem; color: rgba(232, 233, 237, 0.6); }
+.ui-card-side {
+  padding-top: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  color: rgba(255, 255, 255, 0.55);
+}
+.ui-card-side span { font-size: 9px; line-height: 12px; letter-spacing: 0.03em; }
+.ui-card-arrow {
+  width: 32px; height: 32px;
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  background: rgba(249, 250, 251, 0.2);
+  cursor: default;
+  transition: background 0.3s ease;
+}
+.ui-card:hover .ui-card-arrow { background: rgba(249, 250, 251, 0.32); }
+
 .agent-tags-row {
   position: relative;
   z-index: 1;
@@ -794,31 +909,46 @@ section { padding: 108px 32px; }
 .contact-copy p { color: var(--text-dim); font-size: 1.05rem; margin-bottom: 28px; max-width: 460px; }
 
 .contact-form {
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  background: linear-gradient(0deg, #ffffff 0%, var(--bg-raised-2) 100%);
+  border: 5px solid #ffffff;
+  border-radius: 32px;
   padding: 32px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 16px;
+  box-shadow: 0 30px 40px -24px rgba(226, 121, 61, 0.35);
 }
 .form-row { display: flex; flex-direction: column; gap: 8px; }
 .form-row label { font-size: 0.85rem; color: var(--text-dim); }
 .form-row input, .form-row textarea {
-  background: var(--bg-raised-2);
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-sm);
-  padding: 12px 14px;
+  background: #ffffff;
+  border: 2px solid transparent;
+  border-radius: 16px;
+  padding: 13px 16px;
   color: var(--text);
   font-family: var(--ff-body);
   font-size: 0.95rem;
   resize: vertical;
+  box-shadow: 0 10px 16px -10px rgba(226, 121, 61, 0.3);
   transition: border-color 0.2s ease;
 }
 .form-row input:focus, .form-row textarea:focus { outline: none; border-color: var(--accent); }
-.form-submit { justify-content: center; margin-top: 4px; }
+.form-submit {
+  display: block;
+  width: 100%;
+  border: none;
+  border-radius: 16px;
+  padding: 15px;
+  margin-top: 4px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #171008;
+  background: linear-gradient(45deg, var(--accent) 0%, var(--accent-bright) 100%);
+  box-shadow: 0 18px 20px -16px rgba(226, 121, 61, 0.55);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.form-submit:hover { transform: scale(1.03); box-shadow: 0 20px 18px -16px rgba(226, 121, 61, 0.6); }
+.form-submit:active { transform: scale(0.96); box-shadow: 0 12px 14px -10px rgba(226, 121, 61, 0.5); }
 .form-note { font-size: 0.82rem; color: var(--text-faint); text-align: center; }
 
 /* ============ Footer ============ */
