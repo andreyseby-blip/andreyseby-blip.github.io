@@ -373,7 +373,7 @@ h1, h2, h3 {
   z-index: -1;
   pointer-events: none;
   perspective: 600px;
-  opacity: 0.5;
+  opacity: 0.92;
 }
 .cube-loader {
   position: relative;
@@ -437,7 +437,7 @@ h1, h2, h3 {
     0 0 40px hsl(24, 60%, 40%);
 }
 @media (max-width: 640px) {
-  .fixed-cube { transform: translate(-50%, -50%) scale(0.6); opacity: 0.4; }
+  .fixed-cube { transform: translate(-50%, -50%) scale(0.6); opacity: 0.75; }
 }
 
 /* ============ Nav ============ */
@@ -651,8 +651,11 @@ h1, h2, h3 {
 .logo-track.reverse { animation-direction: reverse; animation-duration: 36s; }
 .logo-row:hover .logo-track { animation-play-state: paused; }
 .logo-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
   flex-shrink: 0;
-  padding: 13px 26px;
+  padding: 11px 24px 11px 18px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(10px);
@@ -665,6 +668,13 @@ h1, h2, h3 {
   white-space: nowrap;
   box-shadow: var(--shadow-sm);
 }
+.logo-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  fill: var(--text-dim);
+}
+.logo-icon--stroke { fill: none; stroke: var(--text-dim); }
 @media (max-width: 700px) {
   .logo-orb { display: none; }
 }
