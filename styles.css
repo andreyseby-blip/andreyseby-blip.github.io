@@ -112,7 +112,7 @@ h1, h2, h3 {
   color: #171008;
   box-shadow: 0 8px 24px -6px rgba(226, 121, 61, 0.55);
 }
-.btn-primary:hover { background: rgba(240, 146, 79, 0.85); transform: translateY(-2px); }
+.btn-primary:hover { background: var(--accent-bright); transform: translateY(-2px); }
 
 .btn-secondary, .btn-ghost {
   z-index: 0;
@@ -138,7 +138,7 @@ h1, h2, h3 {
   color: var(--text);
   border: 1px solid var(--border-strong);
 }
-.btn-secondary:hover { border-color: var(--accent); color: #171008; transform: translateY(-2px); }
+.btn-secondary:hover { background: rgba(255, 255, 255, 0.95); border-color: var(--accent); color: #171008; transform: translateY(-2px); }
 .btn-ghost {
   background: transparent;
   border: 1px solid var(--border-strong);
@@ -356,7 +356,9 @@ h1, h2, h3 {
   box-shadow: var(--shadow-sm);
   opacity: 0;
   animation: agentTagIn 0.6s ease forwards;
+  transition: background 0.2s ease;
 }
+.agent-tag:hover { background: rgba(255, 255, 255, 0.95); }
 .agent-tags-row .agent-tag:nth-child(1) { animation-delay: 0.3s; }
 .agent-tags-row .agent-tag:nth-child(2) { animation-delay: 0.5s; }
 .agent-tags-row .agent-tag:nth-child(3) { animation-delay: 0.7s; }
@@ -369,6 +371,44 @@ h1, h2, h3 {
 }
 
 /* ============ Fixed cube (persistent AI agent mascot) ============ */
+/* Fixed page background: soft gradient orbs, page scrolls over it */
+.fixed-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+  pointer-events: none;
+}
+.fixed-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(2px);
+  opacity: 0.8;
+}
+.orb-a {
+  top: -8%; left: -6%;
+  width: 46vw; height: 46vw;
+  background: radial-gradient(circle at 35% 30%, #fff, var(--accent) 55%, transparent 100%);
+}
+.orb-b {
+  top: 4%; right: -8%;
+  width: 34vw; height: 34vw;
+  background: radial-gradient(circle at 40% 35%, #fff, #b9c2f0 55%, transparent 100%);
+}
+.orb-c {
+  bottom: -10%; left: 30%;
+  width: 40vw; height: 40vw;
+  background: radial-gradient(circle at 35% 30%, #fff, #f0c199 55%, transparent 100%);
+}
+.orb-d {
+  bottom: 20%; right: 10%;
+  width: 26vw; height: 26vw;
+  background: radial-gradient(circle at 40% 35%, #fff, #cfe0ea 55%, transparent 100%);
+}
+@media (max-width: 700px) {
+  .fixed-orb { opacity: 0.55; }
+}
+
 .fixed-cube {
   position: fixed;
   top: 50%;
@@ -377,7 +417,7 @@ h1, h2, h3 {
   z-index: 50;
   pointer-events: none;
   perspective: 600px;
-  opacity: 0.45;
+  opacity: 0.78;
 }
 .cube-loader {
   position: relative;
@@ -441,7 +481,7 @@ h1, h2, h3 {
     0 0 40px hsl(24, 60%, 80%);
 }
 @media (max-width: 640px) {
-  .fixed-cube { transform: translate(-50%, -50%) scale(0.6); opacity: 0.35; }
+  .fixed-cube { transform: translate(-50%, -50%) scale(0.6); opacity: 0.6; }
 }
 
 /* ============ Nav ============ */
@@ -671,7 +711,9 @@ h1, h2, h3 {
   color: var(--text-dim);
   white-space: nowrap;
   box-shadow: var(--shadow-sm);
+  transition: background 0.2s ease, transform 0.2s ease;
 }
+.logo-pill:hover { background: rgba(255, 255, 255, 0.95); transform: translateY(-2px); }
 .logo-icon {
   width: 15px;
   height: 15px;
@@ -740,7 +782,7 @@ section { padding: 108px 32px; }
 }
 .service-card:hover {
   border-color: var(--border-strong);
-  background: var(--bg-raised-2);
+  background: rgba(255, 255, 255, 0.95);
   transform: translateY(-4px);
 }
 .service-icon {
@@ -763,7 +805,7 @@ section { padding: 108px 32px; }
 .service-card p { color: var(--text-dim); font-size: 0.95rem; }
 
 /* ============ Work grid ============ */
-.work { background: var(--bg-raised); }
+.work { background: transparent; }
 .work-grid {
   max-width: var(--container);
   margin: 0 auto;
@@ -782,7 +824,7 @@ section { padding: 108px 32px; }
   flex-direction: column;
   transition: transform 0.25s ease, border-color 0.25s ease;
 }
-.work-card:hover { transform: translateY(-4px); border-color: var(--border-strong); }
+.work-card:hover { transform: translateY(-4px); border-color: var(--border-strong); background: rgba(255, 255, 255, 0.95); }
 .work-card:nth-child(6) { grid-column: 1 / -1; }
 .work-card:nth-child(6) .work-media { aspect-ratio: unset; }
 @media (min-width: 860px) {
@@ -925,7 +967,7 @@ section { padding: 108px 32px; }
 
 
 /* ============ Contact ============ */
-.contact { background: var(--bg-raised); }
+.contact { background: transparent; }
 .contact-inner {
   max-width: var(--container);
   margin: 0 auto;
@@ -965,7 +1007,11 @@ section { padding: 108px 32px; }
   box-shadow: 0 10px 16px -10px rgba(226, 121, 61, 0.3);
   transition: border-color 0.2s ease;
 }
-.form-row input:focus, .form-row textarea:focus { outline: none; border-color: var(--accent); }
+.form-row input:focus, .form-row textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.95);
+}
 .form-submit {
   display: block;
   width: 100%;
@@ -982,7 +1028,11 @@ section { padding: 108px 32px; }
   box-shadow: 0 18px 20px -16px rgba(226, 121, 61, 0.55);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.form-submit:hover { transform: scale(1.03); box-shadow: 0 20px 18px -16px rgba(226, 121, 61, 0.6); }
+.form-submit:hover {
+  transform: scale(1.03);
+  box-shadow: 0 20px 18px -16px rgba(226, 121, 61, 0.6);
+  background: linear-gradient(45deg, var(--accent) 0%, var(--accent-bright) 100%);
+}
 .form-submit:active { transform: scale(0.96); box-shadow: 0 12px 14px -10px rgba(226, 121, 61, 0.5); }
 .form-note { font-size: 0.82rem; color: var(--text-faint); text-align: center; }
 
