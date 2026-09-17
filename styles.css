@@ -371,42 +371,16 @@ h1, h2, h3 {
 }
 
 /* ============ Fixed cube (persistent AI agent mascot) ============ */
-/* Fixed page background: soft gradient orbs, page scrolls over it */
+/* Fixed page background: static photo, page scrolls over it */
 .fixed-bg {
   position: fixed;
   inset: 0;
   z-index: -2;
-  overflow: hidden;
+  background-image: url("assets/brand/bg-cubes.jpg");
+  background-size: cover;
+  background-position: center 30%;
+  background-repeat: no-repeat;
   pointer-events: none;
-}
-.fixed-orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(2px);
-  opacity: 0.8;
-}
-.orb-a {
-  top: -8%; left: -6%;
-  width: 46vw; height: 46vw;
-  background: radial-gradient(circle at 35% 30%, #fff, var(--accent) 55%, transparent 100%);
-}
-.orb-b {
-  top: 4%; right: -8%;
-  width: 34vw; height: 34vw;
-  background: radial-gradient(circle at 40% 35%, #fff, #b9c2f0 55%, transparent 100%);
-}
-.orb-c {
-  bottom: -10%; left: 30%;
-  width: 40vw; height: 40vw;
-  background: radial-gradient(circle at 35% 30%, #fff, #f0c199 55%, transparent 100%);
-}
-.orb-d {
-  bottom: 20%; right: 10%;
-  width: 26vw; height: 26vw;
-  background: radial-gradient(circle at 40% 35%, #fff, #cfe0ea 55%, transparent 100%);
-}
-@media (max-width: 700px) {
-  .fixed-orb { opacity: 0.55; }
 }
 
 .fixed-cube {
