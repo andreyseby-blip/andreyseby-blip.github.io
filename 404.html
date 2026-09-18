@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page not found — Andrei Popescu</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23141824'/%3E%3Ccircle cx='50' cy='50' r='16' fill='%23e2793d'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .notfound {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 32px;
+    position: relative;
+    z-index: 1;
+  }
+  .notfound-code {
+    font-family: var(--ff-mono);
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .notfound h1 {
+    font-size: clamp(2.4rem, 6vw, 3.6rem);
+    margin-bottom: 16px;
+    text-wrap: balance;
+  }
+  .notfound p {
+    color: var(--text-dim);
+    font-size: 1.05rem;
+    max-width: 460px;
+    margin: 0 auto 32px;
+  }
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+<div class="grain"></div>
+<div class="fixed-bg" aria-hidden="true"></div>
+<div class="fixed-cube" aria-hidden="true">
+  <div class="cube-loader">
+    <div class="cube-top"></div>
+    <div class="cube-wrapper">
+      <span class="cube-span" style="--i:0;"></span>
+      <span class="cube-span" style="--i:1;"></span>
+      <span class="cube-span" style="--i:2;"></span>
+      <span class="cube-span" style="--i:3;"></span>
+    </div>
+  </div>
+</div>
+
+<main id="main" class="notfound">
+  <p class="notfound-code">404 — Page not found</p>
+  <h1>That page doesn't exist.</h1>
+  <p>The link might be broken, or the page may have moved. Head back to the homepage to find what you're looking for.</p>
+  <a href="/" class="btn btn-primary">
+    Back to homepage
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+  </a>
+</main>
+
+</body>
+</html>
